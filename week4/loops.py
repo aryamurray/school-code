@@ -24,7 +24,7 @@
 #         print("erm, I can smell a problem going on....")
 
 
-length =4
+length = 4
 
 
 for i in range(length):

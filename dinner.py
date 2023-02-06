@@ -2,7 +2,6 @@
 # Date: January 25th, 2022
 # Desc: A Program in order to recommend for for a party based on preferences. Also calculates cost for participants.
 # DISCLAIMER: Program assumes that user knows the program syntax.
-from decimal import Decimal
 
 #Establishing number of dinner invitees and assigning to variable
 #valid input is assumed for these integer values

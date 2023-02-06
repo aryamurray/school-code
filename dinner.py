@@ -1,6 +1,6 @@
 # Developed by Arya C. Murray
 # Date: January 25th, 2022
-# Desc: A Program in order to recommend for for a party based on preferences. Also calculates cost for participants.
+# Desc: A Program in order to recommend food for multiple dinner guests based on dietary preferences.
 # DISCLAIMER: Program assumes that user knows the program syntax.
 
 #Establishing number of dinner invitees and assigning to variable
@@ -15,10 +15,6 @@ invitees = int(input())
 
 food_choices = [] #initialize the chosen foods list.
 cost = 0 #initialize the cost variable 
-
-
-
-
 
 
 #loop over the number of invitees to attain their preferences
@@ -84,8 +80,6 @@ for i in range(invitees):
  # Creating Space for Aesthetic
     print("_______________________________________________________________\n")
 
-
-
     
 #Attain how much the user would like to tip
 tax = 1.13
@@ -97,11 +91,11 @@ post_tip_cost = (tip*after_tax_cost)
 
 # Report to the user the orders that they have chosen
 print("You have X invitees with the following orders:")
-print(food_choices.count("Pizza"), 'invitees ordered Pizza. The cost is:$%.2f ' % (food_choices.count("Pizza")* 44.50 * tax ), 2)
+print(food_choices.count("Pizza"), 'invitees ordered Pizza. The cost is:$%.2f ' % (food_choices.count("Pizza")* 44.50 * tax ))
 print(food_choices.count("Pasta"), 'invitees ordered Pasta. The cost is:$%.2f ' % (food_choices.count("Pasta")* 48.99 * tax ))
 print(food_choices.count("Falafel"), 'invitees ordered Falafel. The cost is:$%.2f' % (food_choices.count("Falafel")* 52.99 * tax))
 print(food_choices.count("Steak"), 'invitees ordered Steak. The cost is:$%.2f ' % (food_choices.count("Steak")* 49.60 * tax))
-print(food_choices.count("Beverage"), 'invitees ordered only Beverage. The cost is:$%.2f' % (food_choices.count("Beverage")* 49.60 * tax) )
+print(food_choices.count("Beverage"), 'invitees ordered only Beverage. The cost is:$%.2f' % (food_choices.count("Beverage")* 5.99 * tax) )
 
 # Creating Space for Aesthetic
 print("\n _______________________________________________________________\n")

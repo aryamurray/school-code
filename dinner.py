@@ -2,11 +2,9 @@
 # Date: January 25th, 2022
 # Desc: A Program in order to recommend for for a party based on preferences. Also calculates cost for participants.
 # DISCLAIMER: Program assumes that user knows the program syntax.
-from decimal import Decimal
 
 #Establishing number of dinner invitees and assigning to variable
 #valid input is assumed for these integer values
-
 
 print("Please enter the number of invitees:")
 invitees = int(input())
@@ -16,10 +14,6 @@ invitees = int(input())
 
 food_choices = [] #initialize the chosen foods list.
 cost = 0 #initialize the cost variable 
-
-
-
-
 
 
 #loop over the number of invitees to attain their preferences
@@ -87,7 +81,7 @@ for i in range(invitees):
 
 
 
-    
+
 #Attain how much the user would like to tip
 tax = 1.13
 tip = ((int(input("How much do you want to tip your server (% percent)?:")) /100) + 1)

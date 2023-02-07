@@ -6,16 +6,17 @@
 #Establishing number of dinner invitees and assigning to variable
 #valid input is assumed for these integer values
 
-
 print("Please enter the number of invitees:")
 invitees = int(input())
 
+#these variables need to be initialized here . Just adding the initial amounts for each 'food' item to count as we add them
 
-#these variables need to be initialized here 
-
-food_choices = [] #initialize the chosen foods list.
+pizza_counter = 0
+pasta_counter = 0
+steak_counter = 0
+falafel_counter = 0
+beverage_counter = 0
 cost = 0 #initialize the cost variable 
-
 
 #loop over the number of invitees to attain their preferences
 for i in range(invitees):
@@ -47,35 +48,35 @@ for i in range(invitees):
     if keto == False and vegan == False and gf == False:
         print("We'll be serving you just a beverage then.")
         cost = cost + 5.99
-        food_choices.append("Beverage")
+        beverage_counter = beverage_counter+1
     elif keto == False and vegan == False and gf == True:
         print("We'll be serving you just a beverage then.")   
         cost = cost + 5.99
-        food_choices.append("Beverage")
+        beverage_counter = beverage_counter+1
     elif keto == False and vegan == True and gf == False:
         print("We'll be serving you a pasta then.") 
         cost = cost + 48.99
-        food_choices.append("Pasta")
+        pasta_counter = pasta_counter+1
     elif keto == True and vegan == False and gf == False:
         print("We'll be serving you just a beverage then.")   
         cost = cost + 5.99
-        food_choices.append("Beverage")
+        beverage_counter = beverage_counter+1
     elif keto == True and vegan == True and gf == False:
         print("We'll be serving you a Pizza then.")
         cost = cost + 44.50
-        food_choices.append("Pizza")
+        pizza_counter = pizza_counter+1
     elif keto == False and vegan == True and gf == True:
         print("We'll be serving you just a beverage then.")
         cost = cost + 5.99
-        food_choices.append("Beverage")
+        beverage_counter = beverage_counter+1
     elif keto == True and vegan == False and gf == True:
         print("We'll be serving you a Steak then")
         cost = cost + 49.60
-        food_choices.append("Steak")
+        steak_counter = steak_counter+1
     elif keto == True and vegan == True and gf == True:
         print("We'll be serving you a Falafel then")
         cost = cost + 52.99
-        food_choices.append("Falafel")
+        falafel_counter = falafel_counter+1
 
  # Creating Space for Aesthetic
     print("_______________________________________________________________\n")
@@ -87,15 +88,13 @@ tip = ((int(input("How much do you want to tip your server (% percent)?:")) /100
 after_tax_cost = (cost*1.13)
 post_tip_cost = (tip*after_tax_cost)
 
-
-
 # Report to the user the orders that they have chosen
 print("You have X invitees with the following orders:")
-print(food_choices.count("Pizza"), 'invitees ordered Pizza. The cost is:$%.2f ' % (food_choices.count("Pizza")* 44.50 * tax ))
-print(food_choices.count("Pasta"), 'invitees ordered Pasta. The cost is:$%.2f ' % (food_choices.count("Pasta")* 48.99 * tax ))
-print(food_choices.count("Falafel"), 'invitees ordered Falafel. The cost is:$%.2f' % (food_choices.count("Falafel")* 52.99 * tax))
-print(food_choices.count("Steak"), 'invitees ordered Steak. The cost is:$%.2f ' % (food_choices.count("Steak")* 49.60 * tax))
-print(food_choices.count("Beverage"), 'invitees ordered only Beverage. The cost is:$%.2f' % (food_choices.count("Beverage")* 5.99 * tax) )
+print(pizza_counter, 'invitees ordered Pizza. The cost is:$%.2f ' % (pizza_counter* 44.50 * tax ))
+print(pasta_counter, 'invitees ordered Pasta. The cost is:$%.2f ' % (pasta_counter* 48.99 * tax ))
+print(falafel_counter, 'invitees ordered Falafel. The cost is:$%.2f' % (falafel_counter* 52.99 * tax))
+print(steak_counter, 'invitees ordered Steak. The cost is:$%.2f ' % (steak_counter* 49.60 * tax))
+print(beverage_counter, 'invitees ordered only Beverage. The cost is:$%.2f' % (beverage_counter* 5.99 * tax) )
 
 # Creating Space for Aesthetic
 print("\n _______________________________________________________________\n")

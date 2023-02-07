@@ -24,12 +24,3 @@ plt.ylabel("Number of People")
 plt.title("Comparing Age in relation to phone usage")
 plt.legend()
 plt.show()
-
-
-
-# 18-24 49, 46 , 5
-# 25-34 58, 35 , 7
-# 35-44 44, 45 , 11
-# 45-54 28, 58 , 14
-# 55-64 22, 59 , 19
-# 65+   11, 45 , 44

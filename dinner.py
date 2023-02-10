@@ -46,55 +46,47 @@ for i in range(invitees):
     #Make reccomendations for food based on preferences !
     
     if keto == False and vegan == False and gf == False:
-        print("We'll be serving you just a beverage then.")
         cost = cost + 5.99
-        beverage_counter = beverage_counter+1
-    elif keto == False and vegan == False and gf == True:
-        print("We'll be serving you just a beverage then.")   
+        beverage_counter +=1
+    elif keto == False and vegan == False and gf == True:   
         cost = cost + 5.99
-        beverage_counter = beverage_counter+1
+        beverage_counter +=1
     elif keto == False and vegan == True and gf == False:
-        print("We'll be serving you a pasta then.") 
         cost = cost + 48.99
-        pasta_counter = pasta_counter+1
-    elif keto == True and vegan == False and gf == False:
-        print("We'll be serving you just a beverage then.")   
+        pasta_counter +=1
+    elif keto == True and vegan == False and gf == False:  
         cost = cost + 5.99
-        beverage_counter = beverage_counter+1
+        beverage_counter +=1
     elif keto == True and vegan == True and gf == False:
-        print("We'll be serving you a Pizza then.")
         cost = cost + 44.50
-        pizza_counter = pizza_counter+1
+        pizza_counter +=1
     elif keto == False and vegan == True and gf == True:
-        print("We'll be serving you just a beverage then.")
         cost = cost + 5.99
-        beverage_counter = beverage_counter+1
+        beverage_counter +=1
     elif keto == True and vegan == False and gf == True:
-        print("We'll be serving you a Steak then")
         cost = cost + 49.60
-        steak_counter = steak_counter+1
+        steak_counter +=1
     elif keto == True and vegan == True and gf == True:
-        print("We'll be serving you a Falafel then")
         cost = cost + 52.99
-        falafel_counter = falafel_counter+1
+        falafel_counter +=1
 
  # Creating Space for Aesthetic
     print("_______________________________________________________________\n")
 
     
-#Attain how much the user would like to tip
+#Attain how much the user would like to tip, also init the tax stuff.
 tax = 1.13
-tip = ((int(input("How much do you want to tip your server (% percent)?:")) /100) + 1)
+tip = ((int(input("How much do you want to tip your server (% percent)?")) /100) + 1)
 after_tax_cost = (cost*1.13)
 post_tip_cost = (tip*after_tax_cost)
 
 # Report to the user the orders that they have chosen
-print("You have X invitees with the following orders:")
+print("You have %d invitees with the following orders:" % (invitees))
 print(pizza_counter, 'invitees ordered Pizza. The cost is:$%.2f ' % (pizza_counter* 44.50 * tax ))
 print(pasta_counter, 'invitees ordered Pasta. The cost is:$%.2f ' % (pasta_counter* 48.99 * tax ))
 print(falafel_counter, 'invitees ordered Falafel. The cost is:$%.2f' % (falafel_counter* 52.99 * tax))
 print(steak_counter, 'invitees ordered Steak. The cost is:$%.2f ' % (steak_counter* 49.60 * tax))
-print(beverage_counter, 'invitees ordered only Beverage. The cost is:$%.2f' % (beverage_counter* 5.99 * tax) )
+print(beverage_counter, 'invitees ordered only beverage. The cost is: $%.2f' % (beverage_counter* 5.99 * tax) )
 
 # Creating Space for Aesthetic
 print("\n _______________________________________________________________\n")

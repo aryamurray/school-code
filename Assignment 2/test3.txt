@@ -1,0 +1,7 @@
+input:
+
+3
+
+expected output:
+
+[]

@@ -6,15 +6,12 @@ RAM = [['1', '16 GB', 82.99], ['2', '32 GB', 174.99]]
 GRAPHICS_CARD = [['1', 'MSI GeForce RTX 3060 12GB', 539.99]]
 PSU = [['1', 'Corsair RM750', 164.99]]
 CASE = [['1', 'Full Tower (black)', 149.99], ['2', 'Full Tower (red)', 149.99]]
-
 PREBUILTS = [['1', 'Legion Tower Gen 7 with RTX 3080 Ti', 3699.99], ['2',
 'SkyTech Prism II Gaming PC', 2839.99], ['3', 'ASUS ROG Strix G10CE Gaming PC',
 1099.99]]
 
 totalcost = []
 cost = 0
-
-
 
 def pickcpu():
     while True:
@@ -25,16 +22,17 @@ def pickcpu():
         global cost 
         if choice == 1: 
             cost = (CPU[0][2])
-            pickmotherboard(1)
+            x = 1
             break
         elif choice ==2:
             cost = (CPU[1][2])
-            pickmotherboard(2)
+            x = 2
             break
         else:
             continue
+    pickmotherboard(x)
+
 def pickmotherboard(x):
-    while True:
         print("Next, let's pick a compatible motherboard")
         global cost 
         if x == 1:
@@ -56,6 +54,7 @@ def pickmotherboard(x):
                 else:
                     continue
         pickram()
+
 def pickram():
     while True:
         print("Next, Let's pick your RAM.")
@@ -77,9 +76,9 @@ def pickpsu():
     while True:
         print("Next, Let's pick your PSU.")
         print("1 : %s, $%.2f" % (PSU[0][1],PSU[0][2]))
-        choice = int(input("Choose the number that corresponds with the part you want:"))
+        choice = input("Choose the number that corresponds with the part you want:")
         global cost
-        if choice == 1:
+        if choice == "1":
             cost += (PSU[0][2])
             break
         else:
@@ -111,89 +110,118 @@ def pickssd():
         print("3 : %s, $%.2f" % (SSD[2][1],SSD[2][2])) 
         choice = input("Choose the number that corresponds with the part you want (or X to not get an SSD):")
         global cost
-        if choice == 1:
+        bought = True
+        if choice == "1":
             cost += (SSD[0][2])
             break
-        elif choice == 2:
+        elif choice == "2":
             cost += (SSD[1][2])
             break
-        elif choice == 3:
+        elif choice == "3":
             cost += (SSD[2][2])
             break
-        elif choice.lower == "x":
-            pickhdd(False)
+        elif choice == "X" or "x":
+            bought = False
             break
         else:
             continue
-    pickhdd(True)
+    pickhdd(bought)
 
-
-
-def pickhdd(x):
+def pickhdd(bought):
     while True:
         print("Next, Let's pick an HDD (Optional, but you must have at least one SSD or HDD).")
         print("1 : %s, $%.2f" % (HDD[0][1],HDD[0][2]))
         print("2 : %s, $%.2f" % (HDD[1][1],HDD[1][2]))
         global cost
-        if x == True:
+        if bought == True:
             choice = input("Choose the number that corresponds with the part you want (or X to not get an HDD):")
-            if choice == 1:
+            if choice == "1":
                 cost += (HDD[0][2])
                 break
-            elif choice == 2:
+            elif choice == "2":
                 cost += (HDD[1][2])
                 break
-            elif choice.lower == "x":
+            elif choice == "x" or "X":
                 break
             else:
                 continue
-        elif x == False:
+        elif bought == False:
             choice = input("Choose the number that corresponds with the part you want (since you did not get an SSD, you must get an HDD):")
-            if choice == 1:
+            if choice == "1":
                 cost += (HDD[0][2])
                 break
-            elif choice == 2:
+            elif choice == "2":
                 cost += (HDD[1][2])
                 break
             else:
                 continue
+    pickgfx()
+
+def pickgfx():
+    while True:
+        print("Next, Let's pick your graphics card (or X to not get a graphics card).")
+        print("1 : %s, $%.2f" % (GRAPHICS_CARD[0][1],GRAPHICS_CARD[0][2]))
+        choice = input("Choose the number that corresponds with the part you want:")
+        global cost
+        if choice == "1":
+            cost += (GRAPHICS_CARD[0][2])
+            break
+        elif choice == "2":
+            cost += (GRAPHICS_CARD[1][2])
+            break
+        elif choice == "x" or "X":
+                break
+        else:
+            continue
+    build_message()
+
+def build_message():
+    global cost
+    global totalcost
+    print("You have selected all of the required parts! Your total for this PC is %.2f" % (cost))
+    cost = round(cost, 2)
+    totalcost.append(cost)
+
 def pickprebuilt():
     while True:
-        print("Great, let's pick a pre-built PC!\n")
+        print("Great, let's pick a pre-built PC!")
         print("Which prebuilt would you like to order?")
         print("1 : %s, $%.2f" % (PREBUILTS[0][1],PREBUILTS[0][2]))
         print("2 : %s, $%.2f" % (PREBUILTS[1][1],PREBUILTS[1][2])) 
         print("2 : %s, $%.2f" % (PREBUILTS[2][1],PREBUILTS[2][2])) 
         choice = int(input("Choose the number that corresponds with the part you want:"))
         if choice == 1:
+            totalcost.append(PREBUILTS[0][2])
+            print("Your total cost for this prebuilt is $%.2f" % (PREBUILTS[0][2]))
             break
         elif choice == 2:
+            totalcost.append(PREBUILTS[1][2])
+            print("Your total cost for this prebuilt is $%.2f" % (PREBUILTS[1][2]))
             break
         elif choice == 3:
+            totalcost.append(PREBUILTS[2][2])
+            print("Your total cost for this prebuilt is $%.2f" % (PREBUILTS[2][2]))
             break
         else:
             continue
 
-def checkout():
-    return 0
-
 def pickitems():
-    return 0
+    print(totalcost)
 
 def main():
     while True:
-        print("Welcome to my PC Shop!!")
-        choice = int(input("Would you like to build a custom PC? (1), purchase a prebuilt PC (2), or would you like to checkout? (3)"))     
-        if choice == 1:
+        choice = input("Would you like to build a custom PC? (1), purchase a prebuilt PC (2), or would you like to checkout? (3)")     
+        if choice == "1":
             print("Great! Let's start building your PC!")
             pickcpu()
-        elif choice == 2:
-            print("Great! Let's pick a pre-built PC!")
+        elif choice == "2":
             pickprebuilt()
-        elif choice == 3:
-            checkout()
+        elif choice == "3":
+            pickitems()
+        elif choice == "q" or "exit":
+            exit()
         else:
-            False
+            continue
 
-
+print("Welcome to my PC Shop!!")
 main()

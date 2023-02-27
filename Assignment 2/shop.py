@@ -18,13 +18,13 @@ def pickcpu():
         print("First, let's pick a CPU.")
         print("1 : %s, $%.2f" % (CPU[0][1],CPU[0][2]))
         print("2 : %s, $%.2f" % (CPU[1][1],CPU[1][2])) 
-        choice = int(input("Choose the number that corresponds with the part you want:"))
+        choice = input("Choose the number that corresponds with the part you want:")
         global cost 
-        if choice == 1: 
+        if choice == "1": 
             cost = (CPU[0][2])
             x = 1
             break
-        elif choice ==2:
+        elif choice == "2":
             cost = (CPU[1][2])
             x = 2
             break
@@ -33,39 +33,39 @@ def pickcpu():
     pickmotherboard(x)
 
 def pickmotherboard(x):
-        print("Next, let's pick a compatible motherboard")
-        global cost 
-        if x == 1:
-            while True:
-                print("1 : %s, $%.2f" % (MOTHERBOARD[1][1],CPU[1][2]))
-                choice = int(input("Choose the number that corresponds with the part you want:"))
-                if choice == 1:
-                    cost += (MOTHERBOARD[1][2])
-                    break
-                else:
-                    continue
-        elif x == 2:
-            while True:
-                print("1 : %s, $%.2f" % (MOTHERBOARD[0][1],CPU[0][2]))
-                choice = int(input("Choose the number that corresponds with the part you want:"))
-                if choice == 1:
-                    cost += (MOTHERBOARD[0][2])
-                    break
-                else:
-                    continue
-        pickram()
+    print("Next, let's pick a compatible motherboard")
+    global cost 
+    if x == 1:
+        while True:
+            print("2 : %s, $%.2f" % (MOTHERBOARD[1][1],CPU[1][2]))
+            choice = input("Choose the number that corresponds with the part you want:")
+            if choice == "2":
+                cost += (MOTHERBOARD[1][2])
+                break
+            else:
+                continue
+    elif x == 2:
+        while True:
+            print("1 : %s, $%.2f" % (MOTHERBOARD[0][1],CPU[0][2]))
+            choice = input("Choose the number that corresponds with the part you want:")
+            if choice == "1":
+                cost += (MOTHERBOARD[0][2])
+                break
+            else:
+                continue
+    pickram()
 
 def pickram():
     while True:
         print("Next, Let's pick your RAM.")
         print("1 : %s, $%.2f" % (RAM[0][1],RAM[0][2]))
         print("2 : %s, $%.2f" % (RAM[1][1],RAM[1][2])) 
-        choice = int(input("Choose the number that corresponds with the part you want:"))
+        choice = input("Choose the number that corresponds with the part you want:")
         global cost
-        if choice == 1:
+        if choice == "1":
             cost += (RAM[0][2])
             break
-        elif choice == 2:
+        elif choice == "2":
             cost += (RAM[1][2])
             break
         else:
@@ -90,12 +90,12 @@ def pickcase():
         print("Next, Let's pick your case.")
         print("1 : %s, $%.2f" % (CASE[0][1],CASE[0][2]))
         print("2 : %s, $%.2f" % (CASE[1][1],CASE[1][2])) 
-        choice = int(input("Choose the number that corresponds with the part you want:"))
+        choice = input("Choose the number that corresponds with the part you want:")
         global cost
-        if choice == 1:
+        if choice == "1":
             cost += (CASE[0][2])
             break
-        elif choice == 2:
+        elif choice == "2":
             cost += (CASE[1][2])
             break
         else:
@@ -166,9 +166,6 @@ def pickgfx():
         if choice == "1":
             cost += (GRAPHICS_CARD[0][2])
             break
-        elif choice == "2":
-            cost += (GRAPHICS_CARD[1][2])
-            break
         elif choice == "x" or "X":
                 break
         else:
@@ -188,7 +185,7 @@ def pickprebuilt():
         print("Which prebuilt would you like to order?")
         print("1 : %s, $%.2f" % (PREBUILTS[0][1],PREBUILTS[0][2]))
         print("2 : %s, $%.2f" % (PREBUILTS[1][1],PREBUILTS[1][2])) 
-        print("2 : %s, $%.2f" % (PREBUILTS[2][1],PREBUILTS[2][2])) 
+        print("3 : %s, $%.2f" % (PREBUILTS[2][1],PREBUILTS[2][2])) 
         choice = int(input("Choose the number that corresponds with the part you want:"))
         if choice == 1:
             totalcost.append(PREBUILTS[0][2])

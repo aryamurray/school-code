@@ -1,3 +1,5 @@
+# Hold all our lists at the top for usage later
+
 SSD = [['1', '250 GB', 69.99], ['2', '500 GB', 93.99], ['3', '4 TB', 219.99]]
 HDD = [['1', '500 GB', 106.33], ['2', '1 TB', 134.33]]
 CPU = [['1', 'Intel Core i7-11700K', 499.99], ['2', 'AMD Ryzen 7 5800X', 312.99]]
@@ -10,9 +12,12 @@ PREBUILTS = [['1', 'Legion Tower Gen 7 with RTX 3080 Ti', 3699.99], ['2',
 'SkyTech Prism II Gaming PC', 2839.99], ['3', 'ASUS ROG Strix G10CE Gaming PC',
 1099.99]]
 
+#Init our final cost list which is printed at the end as well as the cost
+#variable that is used to add prices during the custom PC build(is added to the list at the end)
 totalcost = []
 cost = 0
 
+#Function to choose the cpu
 def pickcpu():
     while True:
         print("First, let's pick a CPU.")
@@ -20,22 +25,23 @@ def pickcpu():
         print("2 : %s, $%.2f" % (CPU[1][1],CPU[1][2])) 
         choice = input("Choose the number that corresponds with the part you want:")
         global cost 
+        global cpu
         if choice == "1": 
             cost = (CPU[0][2])
-            x = 1
+            cpu = 1
             break
         elif choice == "2":
             cost = (CPU[1][2])
-            x = 2
+            cpu = 2
             break
         else:
             continue
-    pickmotherboard(x)
-
-def pickmotherboard(x):
+    
+#Function that chooses the motherboard based on a compatable CPU chosen beforehand
+def pickmotherboard(cpu):
     print("Next, let's pick a compatible motherboard")
     global cost 
-    if x == 1:
+    if cpu == 1:
         while True:
             print("2 : %s, $%.2f" % (MOTHERBOARD[1][1],CPU[1][2]))
             choice = input("Choose the number that corresponds with the part you want:")
@@ -44,7 +50,7 @@ def pickmotherboard(x):
                 break
             else:
                 continue
-    elif x == 2:
+    elif cpu == 2:
         while True:
             print("1 : %s, $%.2f" % (MOTHERBOARD[0][1],CPU[0][2]))
             choice = input("Choose the number that corresponds with the part you want:")
@@ -53,8 +59,8 @@ def pickmotherboard(x):
                 break
             else:
                 continue
-    pickram()
-
+    
+#Choose between two capacities of ram
 def pickram():
     while True:
         print("Next, Let's pick your RAM.")
@@ -70,8 +76,8 @@ def pickram():
             break
         else:
             continue
-    pickpsu()
-
+    
+#Don't really have an option here, you're just getting the only PSU
 def pickpsu():
     while True:
         print("Next, Let's pick your PSU.")
@@ -83,8 +89,8 @@ def pickpsu():
             break
         else:
             continue
-    pickcase()
-
+    
+#picking your case
 def pickcase():
     while True:
         print("Next, Let's pick your case.")
@@ -100,8 +106,7 @@ def pickcase():
             break
         else:
             continue
-    pickssd()
-
+#Picking your ssd (if any)
 def pickssd():
     while True:
         print("Next, Let's pick an SSD (Optional, but you must have at least one SSD or HDD).")
@@ -110,7 +115,8 @@ def pickssd():
         print("3 : %s, $%.2f" % (SSD[2][1],SSD[2][2])) 
         choice = input("Choose the number that corresponds with the part you want (or X to not get an SSD):")
         global cost
-        bought = True
+        global bought_ssd
+        bought_ssd = True
         if choice == "1":
             cost += (SSD[0][2])
             break
@@ -121,19 +127,19 @@ def pickssd():
             cost += (SSD[2][2])
             break
         elif choice == "X" or "x":
-            bought = False
+            bought_ssd = False
             break
         else:
             continue
-    pickhdd(bought)
-
-def pickhdd(bought):
+    
+#Picking your hdd (must buy one if no ssd was bought)
+def pickhdd(bought_ssd):
     while True:
         print("Next, Let's pick an HDD (Optional, but you must have at least one SSD or HDD).")
         print("1 : %s, $%.2f" % (HDD[0][1],HDD[0][2]))
         print("2 : %s, $%.2f" % (HDD[1][1],HDD[1][2]))
         global cost
-        if bought == True:
+        if bought_ssd == True:
             choice = input("Choose the number that corresponds with the part you want (or X to not get an HDD):")
             if choice == "1":
                 cost += (HDD[0][2])
@@ -145,7 +151,7 @@ def pickhdd(bought):
                 break
             else:
                 continue
-        elif bought == False:
+        elif bought_ssd == False:
             choice = input("Choose the number that corresponds with the part you want (since you did not get an SSD, you must get an HDD):")
             if choice == "1":
                 cost += (HDD[0][2])
@@ -155,8 +161,8 @@ def pickhdd(bought):
                 break
             else:
                 continue
-    pickgfx()
-
+    
+#Can choose to buy gfx card if you want
 def pickgfx():
     while True:
         print("Next, Let's pick your graphics card (or X to not get a graphics card).")
@@ -170,8 +176,7 @@ def pickgfx():
                 break
         else:
             continue
-    build_message()
-
+#Final build message once all parts are chosen
 def build_message():
     global cost
     global totalcost
@@ -179,6 +184,8 @@ def build_message():
     cost = round(cost, 2)
     totalcost.append(cost)
 
+#Choosing prebuilt PC function. Essnetially the same as before except it's immediately adding the cost 
+#to the list from the prebuilt choices
 def pickprebuilt():
     while True:
         print("Great, let's pick a pre-built PC!")
@@ -201,7 +208,7 @@ def pickprebuilt():
             break
         else:
             continue
-
+#Kind of a redundant function but it was required in the outline.
 def pickitems():
     print(totalcost)
 
@@ -211,6 +218,14 @@ def main():
         if choice == "1":
             print("Great! Let's start building your PC!")
             pickcpu()
+            pickmotherboard(cpu)
+            pickram()
+            pickpsu()
+            pickcase()
+            pickssd()
+            pickhdd(bought_ssd)
+            pickgfx()
+            build_message()
         elif choice == "2":
             pickprebuilt()
         elif choice == "3":
@@ -219,6 +234,7 @@ def main():
             exit()
         else:
             continue
-
+        
+#This is where all the magic actually happens
 print("Welcome to my PC Shop!!")
 main()

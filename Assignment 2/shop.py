@@ -123,11 +123,11 @@ def pickssd():
         elif choice == "2":
             cost += (SSD[1][2])
             break
+        elif choice == "x" or choice == "X":
+            bought_ssd = False
+            break
         elif choice == "3":
             cost += (SSD[2][2])
-            break
-        elif choice == "X" or "x":
-            bought_ssd = False
             break
         else:
             continue
@@ -147,7 +147,7 @@ def pickhdd(bought_ssd):
             elif choice == "2":
                 cost += (HDD[1][2])
                 break
-            elif choice == "x" or "X":
+            elif choice == "x" or choice == "X":
                 break
             else:
                 continue
@@ -172,7 +172,7 @@ def pickgfx():
         if choice == "1":
             cost += (GRAPHICS_CARD[0][2])
             break
-        elif choice == "x" or "X":
+        elif choice == "x" or choice == "X":
                 break
         else:
             continue
@@ -210,28 +210,26 @@ def pickprebuilt():
             continue
 #Kind of a redundant function but it was required in the outline.
 def pickitems():
-    print(totalcost)
+    print("Great! Let's start building your PC!")
+    pickcpu()
+    pickmotherboard(cpu)
+    pickram()
+    pickpsu()
+    pickcase()
+    pickssd()
+    pickhdd(bought_ssd)
+    pickgfx()
+    build_message()
 
 def main():
     while True:
         choice = input("Would you like to build a custom PC? (1), purchase a prebuilt PC (2), or would you like to checkout? (3)")     
         if choice == "1":
-            print("Great! Let's start building your PC!")
-            pickcpu()
-            pickmotherboard(cpu)
-            pickram()
-            pickpsu()
-            pickcase()
-            pickssd()
-            pickhdd(bought_ssd)
-            pickgfx()
-            build_message()
+           pickitems()
         elif choice == "2":
             pickprebuilt()
         elif choice == "3":
-            pickitems()
-        elif choice == "q" or "exit":
-            exit()
+            print(totalcost)
         else:
             continue
         

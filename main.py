@@ -1,3 +1,5 @@
+import os 
+
 def readPatientsFromFile(fileName):
     """
     Reads patient data from a plaintext file.
@@ -18,14 +20,59 @@ def readPatientsFromFile(fileName):
         ...
     }
     """
+  
+    try:
+        if os.path.isfile(fileName) == False:
+            raise ValueError("The file {} could not be found" .format(fileName))
+    except ValueError as err:
+        print("Error: {}" .format(err))
+        exit()
+
+
+    textline = 0
     patients = {}
     with open(fileName, "r") as contents:
-        contents = contents.readlines()
-        contents = [line.replace("\n", "") for line in contents]
-        for data in contents:
-            key, *values = data.split(",")
-            patients.setdefault(key, []).append(values)
-    #here needs to look at errors with the values
+        lines = contents.readlines()
+        for line in lines:
+            textline += 1
+            line = line.replace("\n", "")
+            key, *values = line.split(",")
+            if len(values) != 7:
+                print("Invalid number of fields ({}) in line: [{}]" .format(1 + len(values), textline))
+                continue
+            else:
+                try:
+                    key = int(key)
+                except ValueError:
+                    print("Invalid data type in line: [{}]" .format(textline))
+                    continue
+                try:
+                    values[1] = float(values[1])
+                except ValueError:
+                    print("Invalid data type in line: [{}]" .format(textline))
+                    continue
+                try:
+                    for index in values[2:]:
+                        values[values.index(index)] = int(index)
+                except ValueError:
+                    print("Invalid data type in line: [{}]" .format(textline))
+                try:
+                    if not 30 <= values[1] <= 43:
+                        raise ValueError("Invalid temperature value ({}) in line: [{}]" .format(values[1], textline))
+                    if not 30 <= values[2] <= 200:
+                        raise ValueError("Invalid heart rate value ({}) in line: [{}]" .format(values[2], textline))
+                    if not 5 <= values[3] <= 60:
+                        raise ValueError("Invalid respiratory rate value ({}) in line: [{}]" .format(values[3], textline))
+                    if not 50 <= values[4] <= 250:
+                        raise ValueError("Invalid systolic blood pressure value ({}) in line: [{}]" .format(values[4], textline))
+                    if not 30 <= values[5] <= 150:
+                        raise ValueError("Invalid diastolic blood pressure value ({}) in line: [{}]" .format(values[5], textline))
+                    if not 80 <= values[6] <= 100:
+                        raise ValueError("Invalid oxygen saturation value ({}) in line: [{}]" .format(values[6], textline))
+                except ValueError as err:
+                    print(err)
+                patients.setdefault(key, []).append(values)
+    contents.close()
     return patients
 
 

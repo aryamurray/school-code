@@ -1,5 +1,3 @@
-from typing import List, Dict, Optional 
-
 def readPatientsFromFile(fileName):
     """
     Reads patient data from a plaintext file.
@@ -21,12 +19,13 @@ def readPatientsFromFile(fileName):
     }
     """
     patients = {}
-    contents = open(fileName, "r").readlines()
-    contents = [line.replace("\n", "") for line in contents]
-    for data in contents:
-        key, *values = data.split(",")
-        patients.setdefault(key, []).append(values)
-    print("Will add if wrong data")
+    with open(fileName, "r") as contents:
+        contents = contents.readlines()
+        contents = [line.replace("\n", "") for line in contents]
+        for data in contents:
+            key, *values = data.split(",")
+            patients.setdefault(key, []).append(values)
+    #here needs to look at errors with the values
     return patients
 
 
@@ -44,8 +43,7 @@ def displayPatientData(patients, patientId=0):
     Diastolic Blood Pressure: {diastolic blood pressure value} mmHg
     Oxygen Saturation: {oxygen saturation value} %
     """
-    print(patients)
-    if patientId == 0:
+    if patientId == 0 or patientId == "0":
         for key in patients.keys():
             print("\n\nPatient ID: {}" .format(key))
             for sublist in patients[key]:
@@ -57,21 +55,16 @@ def displayPatientData(patients, patientId=0):
                 print("    Diastolic Blood Pressure: {}" .format(sublist[5]))
                 print("    Oxygen Saturation: {}" .format(sublist[6]))
     elif str(patientId) in patients:
-        for sublist in patients[patientId]:
+        for sublist in patients[str(patientId)]:
             print("Visit Date: {}" .format(sublist[0]))
-            print("    Temperature: {}" .format(sublist[1]))
-            print("    Heart Rate: {}" .format(sublist[2]))
-            print("    Respitory Rate: {}" .format(sublist[3]))
-            print("    Systolic Blood Pressure: {}" .format(sublist[4]))
-            print("    Diastolic Blood Pressure: {}" .format(sublist[5]))
-            print("    Oxygen Saturation: {}" .format(sublist[6]))
+            print(" Temperature: {}" .format(sublist[1]))
+            print("  Heart Rate: {}" .format(sublist[2]))
+            print("  Respitory Rate: {}" .format(sublist[3]))
+            print("  Systolic Blood Pressure: {}" .format(sublist[4]))
+            print("  Diastolic Blood Pressure: {}" .format(sublist[5]))
+            print("  Oxygen Saturation: {}" .format(sublist[6]))
     else:
-        print("error")
-    
-
-
-
-
+        print("Patient with ID {} not found." .format(patientId))
 
 
 def displayStats(patients, patientId=0):
@@ -81,9 +74,63 @@ def displayStats(patients, patientId=0):
     patients: A dictionary of patient IDs, where each patient has a list of visits.
     patientId: The ID of the patient to display vital signs for. If 0, vital signs will be displayed for all patients.
     """
-    #######################
-    #### PUT YOUR CODE HERE
-    #######################
+    try:
+        if not isinstance(patientId, int):
+            raise TypeError("'patientId' should be an integer.")
+    except TypeError as err:
+        print("Error:", err)
+    avgtemp = []
+    avgheartrate = []
+    avgresprate = []
+    avgsysbp = []
+    avgdiabp = []
+    avgoxy = []
+    if patientId == 0 or patientId == "0":
+        for key in patients.keys():
+            for sublist in patients[key]:
+                avgtemp.append(float(sublist[1]))
+                avgheartrate.append(float(sublist[2]))
+                avgresprate.append(float(sublist[3]))
+                avgsysbp.append(float(sublist[4]))
+                avgdiabp.append(float(sublist[5]))
+                avgoxy.append(float(sublist[6]))
+        avgtemp = sum(avgtemp) / len(avgtemp)
+        avgheartrate = sum(avgheartrate) / len(avgheartrate)
+        avgresprate = sum(avgresprate) / len(avgresprate)
+        avgsysbp = sum(avgsysbp) / len(avgsysbp)
+        avgdiabp = sum(avgdiabp) / len(avgdiabp)
+        avgoxy = sum(avgoxy) / len(avgoxy)
+        print("Vital Signs for All Patients:")
+        print(" Average Temperature: %.2f C" % (avgtemp))
+        print(" Average Heart Rate: %.2f bpm" % (avgheartrate))
+        print(" Average Respiratory Rate: %.2f bpm" % (avgresprate))
+        print(" Average Systolic Blood Presure: %.2f mmHg" % (avgsysbp))
+        print(" Average Diastolic Blood Pressure: %.2f mmHg" % (avgdiabp))
+        print(" Average Oxygen Saturation: %.2f %%" % (avgoxy))
+    elif str(patientId) in patients.keys():
+        for sublist in patients[patientId]:
+                avgtemp.append(float(sublist[1]))
+                avgheartrate.append(float(sublist[2]))
+                avgresprate.append(float(sublist[3]))
+                avgsysbp.append(float(sublist[4]))
+                avgdiabp.append(float(sublist[5]))
+                avgoxy.append(float(sublist[6]))
+        avgtemp = sum(avgtemp) / len(avgtemp)
+        avgheartrate = sum(avgheartrate) / len(avgheartrate)
+        avgresprate = sum(avgresprate) / len(avgresprate)
+        avgsysbp = sum(avgsysbp) / len(avgsysbp)
+        avgdiabp = sum(avgdiabp) / len(avgdiabp)
+        avgoxy = sum(avgoxy) / len(avgoxy)
+        print("Vital Signs for Patient %i:" % (int(patientId)))
+        print(" Average Temperature: %.2f C" % (avgtemp))
+        print(" Average Heart Rate: %.2f bpm" % (avgheartrate))
+        print(" Average Respiratory Rate: %.2f bpm" % (avgresprate))
+        print(" Average Systolic Blood Presure: %.2f mmHg" % (avgsysbp))
+        print(" Average Diastolic Blood Pressure: %.2f mmHg" % (avgdiabp))
+        print(" Average Oxygen Saturation: %.2f %%" % (avgoxy))
+    else:
+        print("No data found for patient with ID %i" % int(patientId))
+
 
 
 
@@ -102,9 +149,17 @@ def addPatientData(patients, patientId, date, temp, hr, rr, sbp, dbp, spo2, file
     spo2: The patient's oxygen saturation level.
     fileName: The name of the file to append new data to.
     """
-    #######################
-    #### PUT YOUR CODE HERE
-    #######################
+    print("made it")
+    with open(fileName, "a") as file:
+        insert = f"\n{patientId},{date},{temp},{hr},{rr},{sbp},{dbp},{spo2}"
+        file.write(insert)
+    if patientId in patients.keys():
+        oldpatients = patients[patientId]
+        oldpatients.append([patientId,date,temp,hr,rr,sbp,dbp,spo2])
+        patients[patientId] = oldpatients
+    else:
+        patients.update({patientId:[patientId,date,temp,hr,rr,sbp,dbp,spo2]})
+    print("Visit is saved successfully for patient #{}" .format(patientId))
 
 
 

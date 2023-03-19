@@ -1,5 +1,8 @@
-import os
+# Patient Organization System
+# Developed by Arya Murray for Comp Sci 1026 Assignment 3
+# Version 1.0
 
+import os
 
 def readPatientsFromFile(fileName):
     """
@@ -21,7 +24,7 @@ def readPatientsFromFile(fileName):
         ...
     }
     """
-
+    # testing for invalid input (inappropreate filename)
     try:
         if os.path.isfile(fileName) == False:
             raise ValueError(
@@ -29,60 +32,53 @@ def readPatientsFromFile(fileName):
     except ValueError as err:
         print("Error: {}" .format(err))
         exit()
-
+    #initialize some variables we require
     textline = 0
     patients = {}
+    #open the text document and read the data
     with open(fileName, "r") as contents:
         lines = contents.readlines()
-        for line in lines:
-            textline += 1
+        for line in lines:  # For loop to read each line
+            textline += 1  # textline keeps track of which line in the original document that the current line iteration is on
             line = line.replace("\n", "")
             key, *values = line.split(",")
-            if len(values) != 7:
-                print("Invalid number of fields ({}) in line: [{}]" .format(
-                    1 + len(values), textline))
+            if len(values) != 7: #checks for inappropriate number of fields in line
+                print("Invalid number of fields ({}) in line: [{}]" .format(1 + len(values), textline))
                 continue
             else:
                 try:
-                    key = int(key)
+                    key = int(key) #enures that the first value of each line is an integer
                 except ValueError:
                     print("Invalid data type in line: [{}]" .format(textline))
                     continue
                 try:
-                    values[1] = float(values[1])
+                    values[1] = float(values[1]) #ensures that the temperature is a float
                 except ValueError:
                     print("Invalid data type in line: [{}]" .format(textline))
                     continue
                 try:
-                    for index in values[2:]:
+                    for index in values[2:]: # ensures that the rest of the values are integers
                         values[values.index(index)] = int(index)
                 except ValueError:
                     print("Invalid data type in line: [{}]" .format(textline))
                     continue
-                try:
+                try: # All of these statements ensure that the values are in an acceptable range, if they are not. They are discarded and not appended.
                     if not 30 <= values[1] <= 43:
-                        raise ValueError(
-                            "Invalid temperature value ({}) in line: [{}]" .format(values[1], textline))
+                        raise ValueError("Invalid temperature value ({}) in line: [{}]" .format(values[1], textline))
                     if not 30 <= values[2] <= 200:
-                        raise ValueError(
-                            "Invalid heart rate value ({}) in line: [{}]" .format(values[2], textline))
+                        raise ValueError("Invalid heart rate value ({}) in line: [{}]" .format(values[2], textline))
                     if not 5 <= values[3] <= 60:
-                        raise ValueError("Invalid respiratory rate value ({}) in line: [{}]" .format(
-                            values[3], textline))
+                        raise ValueError("Invalid respiratory rate value ({}) in line: [{}]" .format(values[3], textline))
                     if not 50 <= values[4] <= 250:
-                        raise ValueError("Invalid systolic blood pressure value ({}) in line: [{}]" .format(
-                            values[4], textline))
+                        raise ValueError("Invalid systolic blood pressure value ({}) in line: [{}]" .format(values[4], textline))
                     if not 30 <= values[5] <= 150:
-                        raise ValueError("Invalid diastolic blood pressure value ({}) in line: [{}]" .format(
-                            values[5], textline))
+                        raise ValueError("Invalid diastolic blood pressure value ({}) in line: [{}]" .format(values[5], textline))
                     if not 80 <= values[6] <= 100:
-                        raise ValueError("Invalid oxygen saturation value ({}) in line: [{}]" .format(
-                            values[6], textline))
+                        raise ValueError("Invalid oxygen saturation value ({}) in line: [{}]" .format(values[6], textline))
                 except ValueError as err:
                     print(err)
                     continue
-                patients.setdefault(key, []).append(values)
-    contents.close()
+                patients.setdefault(key, []).append(values) # If no errors have been raised, then the data is appended to patients
     return patients
 
 
@@ -99,19 +95,18 @@ def displayPatientData(patients, patientId=0):
     Diastolic Blood Pressure: {diastolic blood pressure value} mmHg
     Oxygen Saturation: {oxygen saturation value} %
     """
+    # In the case that 0 is the input, it scans all the patients
     if patientId == 0 or patientId == "0":
         for key in patients.keys():
             print("\n\nPatient ID: {}" .format(key))
             for sublist in patients[key]:
-                print("Visit Date: {}" .format(sublist[0]))
-                print("    Temperature: {} C" .format(sublist[1]))
-                print("    Heart Rate: {} bpm" .format(sublist[2]))
-                print("    Respitory Rate: {} bpm" .format(sublist[3]))
-                print(
-                    "    Systolic Blood Pressure: {} mmHg" .format(sublist[4]))
-                print(
-                    "    Diastolic Blood Pressure: {} mmHg" .format(sublist[5]))
-                print("    Oxygen Saturation: {} %%" .format(sublist[6]))
+                print(" Visit Date: {}" .format(sublist[0]))
+                print("  Temperature: {} C" .format(sublist[1]))
+                print("  Heart Rate: {} bpm" .format(sublist[2]))
+                print("  Respitory Rate: {} bpm" .format(sublist[3]))
+                print("  Systolic Blood Pressure: {} mmHg" .format(sublist[4]))
+                print("  Diastolic Blood Pressure: {} mmHg" .format(sublist[5]))
+    # Given a single patient id, it prints their information
     elif patientId in patients:
         for sublist in patients[patientId]:
             print("Visit Date: {}" .format(sublist[0]))
@@ -121,6 +116,7 @@ def displayPatientData(patients, patientId=0):
             print("  Systolic Blood Pressure: {} mmHg" .format(sublist[4]))
             print("  Diastolic Blood Pressure: {} mmHg" .format(sublist[5]))
             print("  Oxygen Saturation: {} %%" .format(sublist[6]))
+    #if the id is not found, prints error
     else:
         print("Patient with ID {} not found." .format(patientId))
 
@@ -132,6 +128,7 @@ def displayStats(patients, patientId=0):
     patients: A dictionary of patient IDs, where each patient has a list of visits.
     patientId: The ID of the patient to display vital signs for. If 0, vital signs will be displayed for all patients.
     """
+    # Some error testing at the beginning to ensure valid types
     try:
         patientId = int(patientId)
     except ValueError:
@@ -140,12 +137,14 @@ def displayStats(patients, patientId=0):
     if type(patients) != dict:
         print("Error: 'patients should be a dictionary.'")
         return
+    #instantiate the lists for averages
     avgtemp = []
     avgheartrate = []
     avgresprate = []
     avgsysbp = []
     avgdiabp = []
     avgoxy = []
+    # In the case that 0 is the input, it scans all the patients and prints the average vitals for all patients
     if patientId == 0 or patientId == "0":
         for key in patients.keys():
             for sublist in patients[key]:
@@ -168,6 +167,7 @@ def displayStats(patients, patientId=0):
         print(" Average Systolic Blood Presure: %.2f mmHg" % (avgsysbp))
         print(" Average Diastolic Blood Pressure: %.2f mmHg" % (avgdiabp))
         print(" Average Oxygen Saturation: %.2f %%" % (avgoxy))
+    #Given a single patient id, it scans all the patients and prints the average vitals for all patients
     elif patientId in patients.keys():
         for sublist in patients[patientId]:
             avgtemp.append(float(sublist[1]))
@@ -189,6 +189,7 @@ def displayStats(patients, patientId=0):
         print(" Average Systolic Blood Presure: %.2f mmHg" % (avgsysbp))
         print(" Average Diastolic Blood Pressure: %.2f mmHg" % (avgdiabp))
         print(" Average Oxygen Saturation: %.2f %%" % (avgoxy))
+    #If incorrect integer input, prints error
     else:
         print("No data found for patient with ID %i" % int(patientId))
 
@@ -208,10 +209,12 @@ def addPatientData(patients, patientId, date, temp, hr, rr, sbp, dbp, spo2, file
     spo2: The patient's oxygen saturation level.
     fileName: The name of the file to append new data to.
     """
+    #checks for valid date input
     splitdate = date.split("-")
     if len(splitdate[0]) != 4 or not 1 <= int(splitdate[1]) <= 12 or len(splitdate[1]) != 2 or not 1 <= int(splitdate[2]) <= 31 or len(splitdate[2]) != 2 or len(splitdate) > 3:
         print("Invalid Date. Please enter a valid date.")
         return
+    # All of these statements ensure that the values are in an acceptable range, if they are not, returns error. Quits.
     try:
         if not 30 <= int(temp) <= 43:
             raise ValueError(
@@ -233,17 +236,19 @@ def addPatientData(patients, patientId, date, temp, hr, rr, sbp, dbp, spo2, file
                 "Invalid oxygen saturation. Please enter an oxygen saturation between 80 and 100.")
     except ValueError:
         print(ValueError)
-
+        return
+    #opens the patients file and inserts the new data.
     with open(fileName, "a") as file:
         insert = f"\n{patientId},{date},{temp},{hr},{rr},{sbp},{dbp},{spo2}"
         file.write(insert)
+    # Updates the patients Dictionary with the new data. If key exists, appends the new list to the old list
     if patientId in patients.keys():
         oldpatients = patients[patientId]
         oldpatients.append([patientId, date, temp, hr, rr, sbp, dbp, spo2])
         patients[patientId] = oldpatients
+    # If key doesn't exist, just makes new entry and updates it
     else:
-        patients.update(
-            {patientId: [patientId, date, temp, hr, rr, sbp, dbp, spo2]})
+        patients.update({patientId: [patientId, date, temp, hr, rr, sbp, dbp, spo2]})
     print("Visit is saved successfully for patient #{}" .format(patientId))
 
 
@@ -256,11 +261,12 @@ def findVisitsByDate(patients, year=None, month=None):
     month: The month to filter by.
     return: A list of tuples containing patient ID and visit that match the filter.
     """
+    # ensures that month is a valid value
     visits = []
     if month != None:
         if not 1 <= month <= 12:
             return visits
-
+    #checks for the given values within the patient dictionary
     for patient in patients.keys():
         for visit in patients[patient]:
             dictdate = visit[0].split("-")
@@ -289,10 +295,10 @@ def findPatientsWhoNeedFollowUp(patients):
     return: A list of patient IDs that need follow-up visits to to abnormal health stats.
     """
     followup_patients = []
-
+    # Literally just checks for invalid values that are in the patients dict for abnormal values as specified in the outline
     for patient in patients.keys():
         for visit in patients[patient]:
-            if not 60 < visit[2] < 100 or visit[4] > 140 or visit[5] >90 or visit[6] <90:
+            if not 60 < visit[2] < 100 or visit[4] > 140 or visit[5] > 90 or visit[6] < 90:
                 if patient not in followup_patients:
                     followup_patients.append(int(patient))
 
@@ -308,12 +314,13 @@ def deleteAllVisitsOfPatient(patients, patientId, filename):
     filename: The name of the file to save the updated patient data.
     return: None
     """
+    # if the patient id does not exist, returns error
     if patientId not in patients.keys():
         print("No data found for patient with ID {}".format(patientId))
         return
-    
+    # removes the patientid entry from the dictionary
     patients.pop(patientId)
-
+    #whole section underneath copies contents from textfile and rewrites the whole document without the specified patientid
     with open(filename, "r") as contents:
         lines = contents.readlines()
 

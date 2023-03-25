@@ -1,0 +1,37 @@
+YYZ,Canada,Toronto
+YVR,Canada,Vancouver
+YHZ,Canada,Halifax  
+YOW,Canada,  Ottawa
+YEG,Canada,Edmonton
+YUL,	Canada,Montreal
+YWG,Canada, Winnipeg
+ DFW ,United States,Dallas
+LAX,United States,Los Angeles  
+SFO,United States,	San Francisco
+JFK,United States,New York	
+PHL,United States,Philadelphia
+DTW,United States,Detroit
+ MIA , United States , Miami 
+ORD,United States,Chicago
+DEN,United States,Denver	
+ATL,United States,Atlanta
+GRU,Brazil,Sao Paulo
+GIG,	Brazil,Rio de Janeiro
+BOG,Colombia,Bogota
+MEX,Mexico,	Mexico City
+ PVG, China, Shanghai
+PEK,China,Beijing
+DEL,India,   New Delhi
+MAA,India,Chennai
+ICN,South Korea, Incheon
+MNL,Philippines,Manila
+SYD,Australia,Sydney
+CPT,  South Africa,  Capetown
+NBO,Kenya,Nairobi
+TIP,Libya, Tripoli
+LHR,England,London
+LIS,Portugal	, Lisbon
+CDG,France,Paris
+FCO,Italy, Rome	
+JRS,Palestine,Jerusalem 
+DXB,United Arab Emirates,Dubai

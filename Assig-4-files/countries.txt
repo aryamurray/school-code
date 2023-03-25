@@ -1,0 +1,19 @@
+		 Canada	,North America
+			United States	,North America
+ Brazil,	South America
+Colombia	,				South America
+Mexico	,South America
+			China	,Asia
+India,	Asia
+		South Korea					,Asia
+		Philippines,	Asia
+Australia,	Australia
+ South Africa,	Africa
+		Kenya	,Africa
+Libya,	Africa
+  England				,Europe
+Portugal, 	Europe
+ France,	Europe
+Italy	,Europe
+			Palestine,	Asia
+United Arab Emirates	,     												Asia    		

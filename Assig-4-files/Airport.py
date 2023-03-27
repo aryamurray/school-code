@@ -28,5 +28,5 @@ class Airport:
         self.country = country           
     
     def setContinent(self, continent):
-     self.continent = continent
+        self.continent = continent
 

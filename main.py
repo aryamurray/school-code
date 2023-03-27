@@ -63,18 +63,18 @@ def readPatientsFromFile(fileName):
                     print("Invalid data type in line: [{}]" .format(textline))
                     continue
                 try: # All of these statements ensure that the values are in an acceptable range, if they are not. They are discarded and not appended.
-                    if not 30 <= values[1] <= 43:
-                        raise ValueError("Invalid temperature value ({}) in line: [{}]" .format(values[1], textline))
-                    if not 30 <= values[2] <= 200:
-                        raise ValueError("Invalid heart rate value ({}) in line: [{}]" .format(values[2], textline))
-                    if not 5 <= values[3] <= 60:
-                        raise ValueError("Invalid respiratory rate value ({}) in line: [{}]" .format(values[3], textline))
-                    if not 50 <= values[4] <= 250:
-                        raise ValueError("Invalid systolic blood pressure value ({}) in line: [{}]" .format(values[4], textline))
-                    if not 30 <= values[5] <= 150:
-                        raise ValueError("Invalid diastolic blood pressure value ({}) in line: [{}]" .format(values[5], textline))
-                    if not 80 <= values[6] <= 100:
-                        raise ValueError("Invalid oxygen saturation value ({}) in line: [{}]" .format(values[6], textline))
+                    if not 35 <= values[1] <= 42:
+                        raise ValueError("Invalid temperature value ({}) in line: {}" .format(values[1], line))
+                    if not 30 <= values[2] <= 180:
+                        raise ValueError("Invalid heart rate value ({}) in line: {}" .format(values[2], line))
+                    if not 5 <= values[3] <= 40:
+                        raise ValueError("Invalid respiratory rate value ({}) in line: {}" .format(values[3], line))
+                    if not 70 <= values[4] <= 200:
+                        raise ValueError("Invalid systolic blood pressure value ({}) in line: {}" .format(values[4], line))
+                    if not 40 <= values[5] <= 120:
+                        raise ValueError("Invalid diastolic blood pressure value ({}) in line: {}" .format(values[5], line))
+                    if not 70 <= values[6] <= 100:
+                        raise ValueError("Invalid oxygen saturation value ({}) in line: {}" .format(values[6], line))
                 except ValueError as err:
                     print(err)
                     continue
@@ -211,7 +211,7 @@ def addPatientData(patients, patientId, date, temp, hr, rr, sbp, dbp, spo2, file
     """
     #checks for valid date input
     splitdate = date.split("-")
-    if len(splitdate[0]) != 4 or not 1 <= int(splitdate[1]) <= 12 or len(splitdate[1]) != 2 or not 1 <= int(splitdate[2]) <= 31 or len(splitdate[2]) != 2 or len(splitdate) > 3:
+    if len(splitdate[0]) != 4 or not 1 <= int(splitdate[1]) <= 12 or len(splitdate[1]) != 2 or not 1 <= int(splitdate[2]) <= 31 or len(splitdate[2]) != 2 or not int(splitdate[0]) >= 1900 or len(splitdate) > 3:
         print("Invalid Date. Please enter a valid date.")
         return
     # All of these statements ensure that the values are in an acceptable range, if they are not, returns error. Quits.

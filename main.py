@@ -106,6 +106,7 @@ def displayPatientData(patients, patientId=0):
                 print("  Respitory Rate: {} bpm" .format(sublist[3]))
                 print("  Systolic Blood Pressure: {} mmHg" .format(sublist[4]))
                 print("  Diastolic Blood Pressure: {} mmHg" .format(sublist[5]))
+                print("  Oxygne Saturation: {} %" .format(sublist[6]) )
     # Given a single patient id, it prints their information
     elif patientId in patients:
         for sublist in patients[patientId]:
@@ -121,7 +122,7 @@ def displayPatientData(patients, patientId=0):
         print("Patient with ID {} not found." .format(patientId))
 
 
-def displayStats(patients, patientId=0):
+def displayStats(patients, patientId = 0):
     """
     Prints the average of each vital sign for all patients or for the specified patient.
 
@@ -132,10 +133,10 @@ def displayStats(patients, patientId=0):
     try:
         patientId = int(patientId)
     except ValueError:
-        print("Error: 'patiendId should be an integer.")
+        print("Error: 'patiendId' should be an integer.")
         return
     if type(patients) != dict:
-        print("Error: 'patients should be a dictionary.'")
+        print("Error: 'patients' should be a dictionary.'")
         return
     #instantiate the lists for averages
     avgtemp = []
@@ -191,7 +192,7 @@ def displayStats(patients, patientId=0):
         print(" Average Oxygen Saturation: %.2f %%" % (avgoxy))
     #If incorrect integer input, prints error
     else:
-        print("No data found for patient with ID %i" % int(patientId))
+        print("No data found for patient with ID %i." % int(patientId))
 
 
 def addPatientData(patients, patientId, date, temp, hr, rr, sbp, dbp, spo2, fileName):
@@ -211,29 +212,23 @@ def addPatientData(patients, patientId, date, temp, hr, rr, sbp, dbp, spo2, file
     """
     #checks for valid date input
     splitdate = date.split("-")
-    if len(splitdate[0]) != 4 or not 1 <= int(splitdate[1]) <= 12 or len(splitdate[1]) != 2 or not 1 <= int(splitdate[2]) <= 31 or len(splitdate[2]) != 2 or not int(splitdate[0]) >= 1900 or len(splitdate) > 3:
+    if len(splitdate[0]) != 4 or not 1 <= int(splitdate[1]) <= 12 or not 1 <= int(splitdate[2]) <= 31 or not int(splitdate[0]) >= 1900 or len(splitdate) > 3:
         print("Invalid Date. Please enter a valid date.")
         return
     # All of these statements ensure that the values are in an acceptable range, if they are not, returns error. Quits.
     try:
-        if not 30 <= int(temp) <= 43:
-            raise ValueError(
-                "Invalid temperature. Please enter a temperature between 30 and 43 C")
-        if not 30 <= int(hr) <= 200:
-            raise ValueError(
-                "Invalid heart rate. Please enter a heart rate between 30 and 200 bpm.")
-        if not 5 <= int(rr) <= 60:
-            raise ValueError(
-                "Invalid respiratory rate. Please enter a respiratory rate between 5 and 60 bpm.")
-        if not 50 <= int(sbp) <= 250:
-            raise ValueError(
-                "Invalid systolic blood pressure. Please enter a systolic blood pressure between 50 and 250.")
-        if not 30 <= int(dbp) <= 150:
-            raise ValueError(
-                "Invalid diastolic blood pressure. Please enter a diastolic blood pressure between 30 and 150.")
-        if not 80 <= spo2 <= 100:
-            raise ValueError(
-                "Invalid oxygen saturation. Please enter an oxygen saturation between 80 and 100.")
+        if not 35 <= int(temp) <= 42:
+            raise ValueError("Invalid temperature. Please enter a temperature between 35 and 42 C")
+        if not 30 <= int(hr) <= 180:
+            raise ValueError("Invalid heart rate. Please enter a heart rate between 30 and 180 bpm.")
+        if not 5 <= int(rr) <= 40:
+            raise ValueError("Invalid respiratory rate. Please enter a respiratory rate between 5 and 40 bpm.")
+        if not 70 <= int(sbp) <= 200:
+            raise ValueError("Invalid systolic blood pressure. Please enter a systolic blood pressure between 70 and 200.")
+        if not 40 <= int(dbp) <= 120:
+            raise ValueError("Invalid diastolic blood pressure. Please enter a diastolic blood pressure between 40 and 120.")
+        if not 70 <= spo2 <= 100:
+            raise ValueError("Invalid oxygen saturation. Please enter an oxygen saturation between 70 and 100.")
     except ValueError:
         print(ValueError)
         return
@@ -244,7 +239,7 @@ def addPatientData(patients, patientId, date, temp, hr, rr, sbp, dbp, spo2, file
     # Updates the patients Dictionary with the new data. If key exists, appends the new list to the old list
     if patientId in patients.keys():
         oldpatients = patients[patientId]
-        oldpatients.append([patientId, date, temp, hr, rr, sbp, dbp, spo2])
+        oldpatients.append([date, temp, hr, rr, sbp, dbp, spo2])
         patients[patientId] = oldpatients
     # If key doesn't exist, just makes new entry and updates it
     else:
